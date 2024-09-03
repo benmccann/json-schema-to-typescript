@@ -255,19 +255,19 @@ function getStyledTextForLogging(style: LogStyle): ((text: string) => string) | 
   }
   switch (style) {
     case 'blue':
-      return (text) => pc.bgBlue(pc.whiteBright(text))
+      return text => pc.bgBlue(pc.whiteBright(text))
     case 'cyan':
-      return (text) => pc.bgCyan(pc.whiteBright(text))
+      return text => pc.bgCyan(pc.whiteBright(text))
     case 'green':
-      return (text) => pc.bgGreen(pc.whiteBright(text))
+      return text => pc.bgGreen(pc.whiteBright(text))
     case 'magenta':
-      return (text) => pc.bgMagenta(pc.whiteBright(text))
+      return text => pc.bgMagenta(pc.whiteBright(text))
     case 'red':
-      return (text) => pc.bgRedBright(pc.whiteBright(text))
+      return text => pc.bgRedBright(pc.whiteBright(text))
     case 'white':
-      return (text) => pc.bgWhite(pc.black(text))
+      return text => pc.bgWhite(pc.black(text))
     case 'yellow':
-      return (text) => pc.bgYellow(pc.whiteBright(text))
+      return text => pc.bgYellow(pc.whiteBright(text))
   }
 }
 
