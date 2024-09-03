@@ -3,7 +3,6 @@ import {basename, dirname, extname, normalize, sep, posix} from 'path'
 import {Intersection, JSONSchema, LinkedJSONSchema, NormalizedJSONSchema, Parent} from './types/JSONSchema'
 import {JSONSchema4} from 'json-schema'
 import yaml from 'js-yaml'
-import pc from 'picocolors'
 
 // TODO: pull out into a separate package
 export function Try<T>(fn: () => T, err: (e: Error) => any): T {
@@ -243,7 +242,7 @@ export function log(style: LogStyle, title: string, ...messages: unknown[]): voi
   if (messages.length > 1 && typeof messages[messages.length - 1] !== 'string') {
     lastMessage = messages.splice(messages.length - 1, 1)
   }
-  console.info(pc.bgCyan(pc.whiteBright('debug')), getStyledTextForLogging(style)?.(title), ...messages)
+  console.info(color()?.bgCyan(color()?.whiteBright('debug')), getStyledTextForLogging(style)?.(title), ...messages)
   if (lastMessage) {
     console.dir(lastMessage, {depth: 6, maxArrayLength: 6})
   }
@@ -253,6 +252,8 @@ function getStyledTextForLogging(style: LogStyle): ((text: string) => string) | 
   if (!process.env.VERBOSE) {
     return
   }
+  const pc = color()
+  if (!pc) return
   switch (style) {
     case 'blue':
       return text => pc.bgBlue(pc.whiteBright(text))
@@ -411,4 +412,12 @@ export function parseFileAsJSONSchema(filename: string | null, contents: string)
 
 function isYaml(filename: string) {
   return filename.endsWith('.yaml') || filename.endsWith('.yml')
+}
+
+function color() {
+  let pc
+  try {
+    pc = require('picocolors')
+  } catch {}
+  return pc
 }
